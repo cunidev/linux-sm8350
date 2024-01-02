@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023, Raffaele Tranquillini <raffaele.tranquillini@gmail.com>
+ */
+
+/dts-v1/;
+
+#include "sm8350-xiaomi-venus.dtsi"
+
+/ {
+	model = "Xiaomi Mi 11";
+	compatible = "xiaomi,venus", "qcom,sm8350";
+	/* This can probably (?) be moved under i2c4 * /
+	touchscreen_gpio_i2c {
+		compatible = "i2c-gpio";
+		sda-gpios = <&tlmm 20 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+		scl-gpios = <&tlmm 21 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&i2c4_default &tp_enable_2v8>;
+
+		touchscreen@48 {
+			compatible = "samsung,s6sy761";
+			reg = <0x48>;
+			interrupt-parent = <&tlmm>;
+			interrupts = <23 0x2008>;
+
+			vdd-supply = <&pm8350c_l8>;
+			avdd-supply = <&pm8350c_l13>;
+			
+			pinctrl-names = "default", "sleep";
+			pinctrl-0 = <&tp_rst_active &tp_irq_active>;
+			pinctrl-1 = <&tp_rst_suspend>;
+		};
+	};*/
+};
+/* Modem antenna pins exclusive to lemonade * /
+&tlmm {
+	rf_cable_ant1_active: rf_cable_ant1_active {
+		pins = "gpio27";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+	rf_cable_ant2_active: rf_cable_ant2_active {
+		pins = "gpio92";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+	rf_cable_ant3_active: rf_cable_ant3_active {
+		pins = "gpio44";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+	rf_cable_ant7_active: rf_cable_ant7_active {
+		pins = "gpio155";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+};
+
+&mpss {
+	pinctrl-names = "default";
+	pinctrl-1 = <&rf_cable_ant0_active
+		     &rf_cable_ant1_active
+		     &rf_cable_ant2_active
+		     &rf_cable_ant3_active
+		     &rf_cable_ant7_active>;
+};*/
