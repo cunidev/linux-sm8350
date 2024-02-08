@@ -6,6 +6,9 @@
 
 #include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
 #include <dt-bindings/iio/qcom,spmi-adc7-pm8350b.h>
+//  TODO ??
+#define SMB139x_1_SID 0x0b
+#define SMB139x_2_SID 0x0c
 #include <dt-bindings/iio/qcom,spmi-adc7-smb139x.h>
 #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
 #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
@@ -18,7 +21,7 @@
 #include "pmr735b.dtsi"
 
 /*
- *  Panel: TODO / make from dsi_k2b_38_08_0a_dsc_cmd (looks awful)
+ *  Panel: TODO / make from dsi_k2b_38_08_0a_dsc_cmd (looks awful) or hopefully same as dsi_k11a_...
  *  Regs: TODO (lahaina-pmic-overlay.dtsi) - don't set phone on fire pls :)
  *  USB: TODO
  *  Vibro: TODO (for max-attention hook)
@@ -1376,9 +1379,12 @@
 	vdda-supply = <&pm8350_l6>;
 
 	status = "okay";
+	panel@0 {
+		compatible = "xiaomi,ea8182";
+		reg = <0>;
 
-	display_panel: panel {
-		status = "disabled";
+		backlight = <&backlight>;
+		reset-gpios = <&msmgpio 24 GPIO_ACTIVE_LOW>;
 
 		port {
 			panel_in: endpoint {
@@ -1389,8 +1395,8 @@
 };
 
 &mdss_dsi0_out {
+	data-lanes = <0 1 2 3>;
 	remote-endpoint = <&panel_in>;
-	//data-lanes = <>;
 };
 
 &mdss_dsi0_phy {

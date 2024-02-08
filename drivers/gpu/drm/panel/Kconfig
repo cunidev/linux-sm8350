@@ -824,6 +824,18 @@ config DRM_PANEL_VISIONOX_R66451
 	  Say Y here if you want to enable support for Visionox
 	  R66451 1080x2340 AMOLED DSI panel.
 
+config DRM_PANEL_XIAOMI_EA8182
+	tristate "Xiaomi Mi 11 Ultra ea8182 DSI cmd mode panel"
+	depends on OF
+	depends on DRM_MIPI_DSI
+	depends on BACKLIGHT_CLASS_DEVICE
+	help
+	  Say Y here if you want to enable support for the Xiaomi
+	  Mi 11 Ultra 2k 6.81" OLED DSI cmd mode panels produced by
+	  Samsung.
+
+	  This Driver-IC uses Display Stream Compression 1.1.
+
 config DRM_PANEL_WIDECHIPS_WS2401
 	tristate "Widechips WS2401 DPI panel driver"
 	depends on SPI && GPIOLIB
@@ -834,6 +846,16 @@ config DRM_PANEL_WIDECHIPS_WS2401
 	  480x800 display controller used in panels such as Samsung LMS380KF01.
 	  This display is used in the Samsung Galaxy Ace 2 GT-I8160 (Codina).
 
+config DRM_PANEL_XIAOMI_38080ADSC
+	tristate "Xiaomi 38 08 0a CMD mode panel driver"
+	depends on OF
+	depends on DRM_MIPI_DSI
+	depends on BACKLIGHT_CLASS_DEVICE
+	help
+	  Say Y here if you want to enable support for the Xiaomi
+	  38 08 0a CMD mode panel for 1080x2400 or 1440x3200 120Hz OLED panels
+	  used in the Xiaomi Mi 11 and Xiaomi Poco F3 among others
+	  
 config DRM_PANEL_XINPENG_XPP055C272
 	tristate "Xinpeng XPP055C272 panel driver"
 	depends on OF
